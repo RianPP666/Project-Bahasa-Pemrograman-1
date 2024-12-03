@@ -1,11 +1,12 @@
-package Praktikum;
+package PostTest;
 
+import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class BP1_M5_P1_Rian extends javax.swing.JFrame {
+public class PostTest extends javax.swing.JFrame {
     
     private Object jTable1;
     
@@ -13,7 +14,7 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
     ResultSet rs;
     Koneksi koneksi;
 
-    public BP1_M5_P1_Rian() {
+    public PostTest() {
         initComponents();
         koneksi = new Koneksi();
         load_data();
@@ -29,14 +30,14 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
             st = koneksi.con.createStatement();
             rs = st.executeQuery(sql);
             while(rs.next()){
-                String k1 = rs.getString(1);
-                String k2 = rs.getString(2);
-                String k3 = rs.getString(3);
-                String k4 = rs.getString(4);
-                String k5 = rs.getString(5);
-                String k6 = rs.getString(6); 
-                String k7 = rs.getString(7);
-                String k8 = rs.getString(8);
+                String k1 = rs.getString("NIM");
+                String k2 = rs.getString("NAMA");
+                String k3 = rs.getString("JK");
+                String k4 = rs.getString("Prodi");
+                String k5 = rs.getString("Alamat");
+                String k6 = rs.getString("Kelas"); 
+                String k7 = rs.getString("Angkatan");
+                String k8 = rs.getString("NoHP");
 
 
                 String k[] = {k1, k2, k3, k4, k5, k6, k7, k8};
@@ -45,6 +46,51 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, e);
         }
+    }
+    
+    public void InputData(){
+        try{
+            String JK ="";
+            if(jRadioButton1.isSelected()){
+                JK = jRadioButton1.getText();
+            } else{
+                JK = jRadioButton2.getText();
+            }       
+            String sql = "INSERT INTO table_mhs (NIM, Nama, Kelas, Angkatan, NoHP, JK, Prodi, Alamat) VALUES ('" 
+                + jTextField1.getText() + "', '"
+                + jTextField2.getText() + "', '"
+                + jTextField3.getText() + "', '"
+                + jTextField4.getText() + "', '"
+                + jTextField5.getText() + "', '"
+                + JK + "', '"
+                + jComboBox1.getSelectedItem() + "', '"
+                + jTextArea1.getText() + "')";
+            
+            // Opsi Simpan Data
+            int Opsi = JOptionPane.showConfirmDialog(this, "Apakah Anda Akan Menyimpan Data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
+
+            if (Opsi == JOptionPane.YES_OPTION) {
+                st.execute(sql);
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan.");
+             } else {
+                 JOptionPane.showMessageDialog(this, "Data tidak disimpan.");
+             }
+       
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    // CLear Data
+    public void Clear(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jTextField4.setText("");
+        jTextField5.setText("");
+        buttonGroup.clearSelection();
+        jComboBox1.setSelectedIndex(0);
+        jTextArea1.setText("");
     }
 
     /**
@@ -89,9 +135,9 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
 
         jLabel2.setText("FORM INPUT DATA");
 
-        jLabel3.setText("Nama");
+        jLabel3.setText("NIM");
 
-        jLabel4.setText("NIM");
+        jLabel4.setText("Nama");
 
         jLabel5.setText("Jenis Kelamin");
 
@@ -117,6 +163,11 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
         jScrollPane1.setViewportView(jTextArea1);
 
         Simpan.setText("Simpan");
+        Simpan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SimpanMouseClicked(evt);
+            }
+        });
 
         Tabel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -259,6 +310,13 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
+    private void SimpanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SimpanMouseClicked
+        // TODO add your handling code here:
+        InputData();
+        Clear();
+        load_data();
+    }//GEN-LAST:event_SimpanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -276,20 +334,23 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PostTest.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BP1_M5_P1_Rian().setVisible(true);
+                new PostTest().setVisible(true);
             }
         });
     }

@@ -1,5 +1,6 @@
-package Praktikum;
+package PostTest;
 
+import Praktikum.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;

@@ -1,4 +1,4 @@
-package Praktikum;
+package Tugas;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

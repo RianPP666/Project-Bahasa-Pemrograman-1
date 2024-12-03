@@ -1,11 +1,12 @@
 package Praktikum;
 
+import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-public class BP1_M5_P1_Rian extends javax.swing.JFrame {
+public class BP1_M7_P1_Rian extends javax.swing.JFrame {
     
     private Object jTable1;
     
@@ -13,7 +14,7 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
     ResultSet rs;
     Koneksi koneksi;
 
-    public BP1_M5_P1_Rian() {
+    public BP1_M7_P1_Rian() {
         initComponents();
         koneksi = new Koneksi();
         load_data();
@@ -43,6 +44,28 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
                 data.addRow(k);
             }
         }catch(Exception e){
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    
+    public void InputData(){
+        try{
+            String JK = "";
+            if(jRadioButton1.isSelected()){
+                JK = jRadioButton1.getText();
+            } else{
+                JK = jRadioButton2.getText();
+            }       
+            String sql = "INSERT INTO db_mhs VALUES ('" + jTextField1.getText() + "','" +
+                     jTextField2.getText() + "','" +
+                     JK + "','" +
+                     jComboBox1.getSelectedItem() + "','" +
+                     jTextArea1.getText() + "')";
+              
+            st.execute(sql);
+            JOptionPane.showMessageDialog(null, "Data Mahasiswa Berhasil Di Input");
+            
+        } catch(SQLException e){
             JOptionPane.showMessageDialog(null, e);
         }
     }
@@ -276,20 +299,21 @@ public class BP1_M5_P1_Rian extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BP1_M7_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BP1_M7_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BP1_M7_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(BP1_M5_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(BP1_M7_P1_Rian.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new BP1_M5_P1_Rian().setVisible(true);
+                new BP1_M7_P1_Rian().setVisible(true);
             }
         });
     }
