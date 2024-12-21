@@ -6,7 +6,6 @@ import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.type.*;
 import net.sf.jasperreports.view.JasperViewer;
 
-import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -25,8 +24,8 @@ public class Jasper {
             // Create JasperDesign
             JasperDesign jasperDesign = new JasperDesign();
             jasperDesign.setName("DynamicReport");
-            jasperDesign.setPageWidth(595);
-            jasperDesign.setPageHeight(842);
+            jasperDesign.setPageWidth(595); // A4 width in points
+            jasperDesign.setPageHeight(842); // A4 height in points
             jasperDesign.setColumnWidth(555);
             jasperDesign.setLeftMargin(20);
             jasperDesign.setRightMargin(20);
@@ -47,13 +46,13 @@ public class Jasper {
             JRDesignBand titleBand = new JRDesignBand();
             titleBand.setHeight(50);
             JRDesignStaticText titleText = new JRDesignStaticText();
-            titleText.setText("Report Data Peminjaman");
+            titleText.setText("Data Peminjaman");
             titleText.setX(0);
             titleText.setY(10);
             titleText.setWidth(555);
             titleText.setHeight(30);
-            titleText.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
             titleText.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
+            titleText.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
             titleBand.addElement(titleText);
             jasperDesign.setTitle(titleBand);
 
@@ -72,9 +71,6 @@ public class Jasper {
                 headerText.setHeight(30);
                 headerText.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 headerText.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
-                headerText.setBackcolor(Color.BLUE);
-                headerText.setForecolor(Color.WHITE);
-                headerText.setMode(ModeEnum.OPAQUE);
 
                 headerText.getLineBox().getPen().setLineWidth(0.5f);
 
@@ -96,7 +92,7 @@ public class Jasper {
                 textField.setHeight(20);
                 textField.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 textField.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
-                textField.setStretchType(StretchTypeEnum.NO_STRETCH); // Use StretchTypeEnum instead
+                textField.setStretchType(StretchTypeEnum.NO_STRETCH);
 
                 textField.setExpression(new JRDesignExpression("$F{" + field + "}"));
                 textField.getLineBox().getPen().setLineWidth(0.5f);
@@ -116,7 +112,7 @@ public class Jasper {
             Map<String, Object> parameters = new HashMap<>();
 
             // Fill the report
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);        
 
             // Display report in JasperViewer
             JasperViewer.viewReport(jasperPrint, false);

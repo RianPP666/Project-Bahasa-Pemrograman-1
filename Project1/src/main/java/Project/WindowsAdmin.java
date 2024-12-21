@@ -101,7 +101,6 @@ public class WindowsAdmin extends javax.swing.JFrame {
         Perpustakaan PS = new Perpustakaan();
         jDesktopPane1.add(PS);
         PS.setVisible(true);
-        new Perpustakaan().setVisible(true);
     }//GEN-LAST:event_KelolaBukuMouseClicked
 
     private void DataBukuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DataBukuMouseClicked

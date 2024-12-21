@@ -55,4 +55,5 @@
             <version>7.0.1</version>
         </dependency>
     </dependencies>
+    <name>Project1</name>
 </project>

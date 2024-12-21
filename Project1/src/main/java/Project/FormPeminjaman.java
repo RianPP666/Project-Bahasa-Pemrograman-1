@@ -61,34 +61,55 @@ public class FormPeminjaman extends javax.swing.JInternalFrame {
         }
     }
     
-    public void InputData() {       
+    public void InputData() {
         try {
             if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty() || jComboBox1.getSelectedIndex() == 0 || jTextField3.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(this, "Data Harus Diisi", "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Data Harus Diisi", "Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            
+
+            String kodeBuku = jComboBox1.getSelectedItem().toString();
+            int stok = 0;
+
+            // Ambil stok buku berdasarkan KodeBuku
+            String sql_CekStok = "SELECT Stok FROM databuku WHERE KodeBuku = '" + kodeBuku + "'";
+            st = koneksi.con.createStatement();
+            rs = st.executeQuery(sql_CekStok);
+            if (rs.next()) {
+                stok = rs.getInt("Stok");
+            }
+
+            // Periksa apakah stok cukup
+            if (stok <= 0) {
+                JOptionPane.showMessageDialog(this, "Stok Buku Habis", "Error", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            // Input data ke tabel peminjaman
             String sql_input = "INSERT INTO datapeminjam (Nama, NIM, KodeBuku, Durasi) VALUES ('" 
                 + jTextField1.getText() + "', '" + jTextField2.getText() + "', '" 
-                + jComboBox1.getSelectedItem() + "', '" + jTextField3.getText() + "')";
+                + kodeBuku + "', '" + jTextField3.getText() + "')";
 
-            int Opsi = JOptionPane.showConfirmDialog(this, "Apakah Anda Akan Menyimpan Data?", "Konfirmasi",
-                JOptionPane.YES_NO_OPTION);
+            int opsi = JOptionPane.showConfirmDialog(this, "Apakah Anda Akan Menyimpan Data?", "Konfirmasi", JOptionPane.YES_NO_OPTION);
 
-            if (Opsi == JOptionPane.YES_OPTION) {
+            if (opsi == JOptionPane.YES_OPTION) {
                 st.execute(sql_input);
-                JOptionPane.showMessageDialog(this, "Data berhasil disimpan.");
-                Clear();
-            } else {
-            JOptionPane.showMessageDialog(this, "Data tidak disimpan.");
-            }
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                // Kurangi stok buku
+                String sql_update_stok = "UPDATE databuku SET Stok = Stok - 1 WHERE KodeBuku = '" + kodeBuku + "'";
+                st.execute(sql_update_stok);
+
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+                Clear();
+                LoadData();
+            } else {
+                JOptionPane.showMessageDialog(this, "Data tidak disimpan.");
             }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
+    }
+
     public void Clear(){
         jTextField1.setText("");
         jTextField2.setText("");

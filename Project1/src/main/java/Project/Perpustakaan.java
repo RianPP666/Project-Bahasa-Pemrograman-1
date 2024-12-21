@@ -285,21 +285,21 @@ public class Perpustakaan extends javax.swing.JInternalFrame {
 
     private void EditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditMouseClicked
         // TODO add your handling code here:
-        try {
-            String sql_edit = "UPDATE databuku SET " + 
-                    "Judul = '" + jTextField2.getText() + "', " +
-                    "Pengarang = '" + jTextField3.getText() + "', " +
-                    "Penerbit = '" + jTextField4.getText() + "' " +
-                    "Stok = '" + jTextField5.getText() + "' " +
+        try {      
+            String sql_edit = "UPDATE databuku SET " +
+                    "Judul = CASE WHEN '" + jTextField2.getText() + "' <> '' THEN '" + jTextField2.getText() + "' ELSE Judul END, " +
+                    "Pengarang = CASE WHEN '" + jTextField3.getText() + "' <> '' THEN '" + jTextField3.getText() + "' ELSE Pengarang END, " +
+                    "Penerbit = CASE WHEN '" + jTextField4.getText() + "' <> '' THEN '" + jTextField4.getText() + "' ELSE Penerbit END, " +
+                    "Stok = CASE WHEN '" + jTextField5.getText() + "' <> '' THEN '" + jTextField5.getText() + "' ELSE Stok END " +
                     "WHERE KodeBuku = '" + jTextField1.getText() + "'";
 
-                st.execute(sql_edit);
-                JOptionPane.showMessageDialog(this, "Data Berhasil Diedit.");
-                LoadData();
+            st.execute(sql_edit);
+            JOptionPane.showMessageDialog(this, "Data Berhasil Diedit.");
+            LoadData();
 
-            } catch (SQLException e) {
-                JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            } 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_EditMouseClicked
 
     private void HapusMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HapusMouseClicked

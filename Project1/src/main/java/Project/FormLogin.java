@@ -3,6 +3,7 @@ package Project;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.sql.SQLException;
 
 public class FormLogin extends javax.swing.JFrame {
     
@@ -99,8 +100,49 @@ public class FormLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Username tidak ditemukan", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
+    
+    private void Registrasi(){
+        try {
+            st = Koneksi.con.createStatement();
+            // Validasi input
+            if (jTextField1.getText().isEmpty() || jTextField2.getText().isEmpty()){
+                JOptionPane.showMessageDialog(this, "Data Harus Diisi", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-        private void Login() {
+            // Validasi ComboBox hanya untuk User
+            String level = (String) jComboBox1.getSelectedItem();
+            if (!level.equals("User")) {
+                JOptionPane.showMessageDialog(this, "Registrasi hanya dapat dilakukan oleh User.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String sql = "INSERT INTO tabeluser (Username, Password) VALUES ('" 
+            + jTextField1.getText() + "', '" + jTextField2.getText() + "')";
+
+            // Opsi Simpan Data
+            int Opsi = JOptionPane.showConfirmDialog(this, "Apakah Anda Akan Menyimpan Data?", "Konfirmasi",
+                JOptionPane.YES_NO_OPTION);
+
+            if (Opsi == JOptionPane.YES_OPTION) {
+                st.execute(sql);
+                JOptionPane.showMessageDialog(this, "Data berhasil disimpan.");
+                Clear(); // Bersihkan inputan setelah data disimpan
+            } else {
+                JOptionPane.showMessageDialog(this, "Data tidak disimpan.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    
+    public void Clear(){
+        jTextField1.setText("");
+        jTextField2.setText("");
+    }
+
+    private void Login() {
         String level = (String) jComboBox1.getSelectedItem();
         if (level.equals("Admin")) {
             LoginAdmin();
@@ -123,6 +165,7 @@ public class FormLogin extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
         Close = new javax.swing.JButton();
+        Registrasi = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -150,6 +193,13 @@ public class FormLogin extends javax.swing.JFrame {
             }
         });
 
+        Registrasi.setText("Registrasi");
+        Registrasi.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                RegistrasiMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,24 +208,28 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(55, 55, 55)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel3)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel4)))
-                        .addGap(62, 62, 62)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel3)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel4)))
+                                .addGap(62, 62, 62)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                                    .addComponent(jTextField1)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(Login)
+                                .addGap(18, 18, 18)
+                                .addComponent(Registrasi)
+                                .addGap(18, 18, 18)
+                                .addComponent(Close))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(162, 162, 162)
-                        .addComponent(jLabel1))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(106, 106, 106)
-                        .addComponent(Login)
-                        .addGap(32, 32, 32)
-                        .addComponent(Close)))
+                        .addComponent(jLabel1)))
                 .addContainerGap(56, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -198,7 +252,8 @@ public class FormLogin extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(Login)
-                    .addComponent(Close))
+                    .addComponent(Close)
+                    .addComponent(Registrasi))
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
@@ -207,14 +262,18 @@ public class FormLogin extends javax.swing.JFrame {
 
     private void LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LoginMouseClicked
         // TODO add your handling code here:
-        Login();
-        
+        Login();      
     }//GEN-LAST:event_LoginMouseClicked
 
     private void CloseMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CloseMouseClicked
         // TODO add your handling code here:
          this.dispose();
     }//GEN-LAST:event_CloseMouseClicked
+
+    private void RegistrasiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RegistrasiMouseClicked
+        // TODO add your handling code here:
+        Registrasi();
+    }//GEN-LAST:event_RegistrasiMouseClicked
 
  
     public static void main(String args[]) {
@@ -315,6 +374,7 @@ public class FormLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Close;
     private javax.swing.JButton Login;
+    private javax.swing.JButton Registrasi;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
