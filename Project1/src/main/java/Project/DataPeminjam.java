@@ -64,6 +64,8 @@ public class DataPeminjam extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(241, 255, 255));
+
         jLabel1.setText("DATA PEMINJAM");
 
         jLabel2.setText("Pencarian");

@@ -6,6 +6,7 @@ import net.sf.jasperreports.engine.design.*;
 import net.sf.jasperreports.engine.type.*;
 import net.sf.jasperreports.view.JasperViewer;
 
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -26,9 +27,9 @@ public class Jasper {
             jasperDesign.setName("DynamicReport");
             jasperDesign.setPageWidth(595); // A4 width in points
             jasperDesign.setPageHeight(842); // A4 height in points
-            jasperDesign.setColumnWidth(555);
-            jasperDesign.setLeftMargin(20);
-            jasperDesign.setRightMargin(20);
+            jasperDesign.setColumnWidth(455); // Reduce column width for center alignment
+            jasperDesign.setLeftMargin(70); // Center align
+            jasperDesign.setRightMargin(70);
             jasperDesign.setTopMargin(20);
             jasperDesign.setBottomMargin(20);
             jasperDesign.setWhenNoDataType(WhenNoDataTypeEnum.ALL_SECTIONS_NO_DETAIL);
@@ -49,7 +50,7 @@ public class Jasper {
             titleText.setText("Data Peminjaman");
             titleText.setX(0);
             titleText.setY(10);
-            titleText.setWidth(555);
+            titleText.setWidth(455);
             titleText.setHeight(30);
             titleText.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
             titleText.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
@@ -67,15 +68,18 @@ public class Jasper {
                 headerText.setText(headers[i]);
                 headerText.setX(x);
                 headerText.setY(0);
-                headerText.setWidth(90);
+                headerText.setWidth(110); // Adjust column width
                 headerText.setHeight(30);
                 headerText.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 headerText.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
 
+                headerText.setBackcolor(Color.BLUE); // Set background color
+                headerText.setMode(ModeEnum.OPAQUE); // Enable background color
+
                 headerText.getLineBox().getPen().setLineWidth(0.5f);
 
                 headerBand.addElement(headerText);
-                x += 90; // Adjust width for each column
+                x += 110; // Adjust spacing for each column
             }
             jasperDesign.setColumnHeader(headerBand);
 
@@ -88,7 +92,7 @@ public class Jasper {
                 JRDesignTextField textField = new JRDesignTextField();
                 textField.setX(x);
                 textField.setY(0);
-                textField.setWidth(90);
+                textField.setWidth(110);
                 textField.setHeight(20);
                 textField.setHorizontalTextAlign(HorizontalTextAlignEnum.CENTER);
                 textField.setVerticalTextAlign(VerticalTextAlignEnum.MIDDLE);
@@ -98,7 +102,7 @@ public class Jasper {
                 textField.getLineBox().getPen().setLineWidth(0.5f);
 
                 detailBand.addElement(textField);
-                x += 90; // Adjust width for each column
+                x += 110; // Adjust spacing for each column
             }
             ((JRDesignSection) jasperDesign.getDetailSection()).addBand(detailBand);
 
@@ -112,7 +116,7 @@ public class Jasper {
             Map<String, Object> parameters = new HashMap<>();
 
             // Fill the report
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);        
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, dataSource);
 
             // Display report in JasperViewer
             JasperViewer.viewReport(jasperPrint, false);

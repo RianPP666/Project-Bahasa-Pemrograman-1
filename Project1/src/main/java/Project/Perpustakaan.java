@@ -118,6 +118,8 @@ public class Perpustakaan extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(241, 255, 255));
+
         jLabel1.setText("PERPUSTAKAAN");
 
         jLabel2.setText("Kode Buku");
@@ -306,7 +308,7 @@ public class Perpustakaan extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try{
             st = koneksi.con.createStatement();
-            String sql_delete = "DELETE from matakuliah WHERE KodeBuku = '" + jTextField1.getText()+"'";
+            String sql_delete = "DELETE from databuku WHERE KodeBuku = '" + jTextField1.getText()+"'";
             
             st.execute(sql_delete);
             JOptionPane.showMessageDialog(this, "Data Berhasil Dihapus.");
