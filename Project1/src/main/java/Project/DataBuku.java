@@ -66,6 +66,8 @@ public class DataBuku extends javax.swing.JInternalFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(241, 255, 255));
+
         jLabel1.setText("DATA BUKU");
 
         Tabel.setModel(new javax.swing.table.DefaultTableModel(
