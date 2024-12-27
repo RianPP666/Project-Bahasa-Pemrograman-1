@@ -24,7 +24,7 @@ public class FormLogin extends javax.swing.JFrame {
 
          try {
              st = Koneksi.con.createStatement();
-             rs = st.executeQuery("SELECT username, password FROM tabelUser");
+             rs = st.executeQuery("SELECT Username, Password FROM tabelUser");
 
              while (rs.next()) {
                  String Username = rs.getString("Username");
@@ -49,7 +49,9 @@ public class FormLogin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Password harus diisi", "Error", JOptionPane.ERROR_MESSAGE);
         } else if (loginSuccess) {
             JOptionPane.showMessageDialog(null, "Login Sukses Sebagai " + User, "Login", JOptionPane.INFORMATION_MESSAGE);
-            new WindowsUser().setVisible(true);
+            WindowsUser WU = new WindowsUser();
+            WU.setUsername(User); // Kirim username ke WindowsUser
+            WU.setVisible(true);
             this.dispose();
         } else if (userExists) {
             JOptionPane.showMessageDialog(null, "Password salah", "Error", JOptionPane.ERROR_MESSAGE);
@@ -67,7 +69,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         try {
             st = Koneksi.con.createStatement();
-            rs = st.executeQuery("SELECT username, password FROM tabelAdmin");
+            rs = st.executeQuery("SELECT Username, Password FROM tabelAdmin");
 
             while (rs.next()) {
                 String Username = rs.getString("Username");
@@ -136,7 +138,6 @@ public class FormLogin extends javax.swing.JFrame {
         }
     }
 
-    
     public void Clear(){
         jTextField1.setText("");
         jTextField2.setText("");
@@ -201,7 +202,7 @@ public class FormLogin extends javax.swing.JFrame {
 
         jLabel3.setText("Username");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User", " " }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "User" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

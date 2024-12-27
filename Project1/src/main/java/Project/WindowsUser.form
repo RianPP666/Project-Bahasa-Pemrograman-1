@@ -27,6 +27,14 @@
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PinjamBukuMouseClicked"/>
           </Events>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="PengembalianBuku">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pengembalian Buku"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="PengembalianBukuMouseClicked"/>
+          </Events>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="Logout">
           <Properties>
             <Property name="text" type="java.lang.String" value="Logout"/>

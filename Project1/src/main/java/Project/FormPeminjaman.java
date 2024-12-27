@@ -12,6 +12,7 @@ public class FormPeminjaman extends javax.swing.JInternalFrame {
     Statement st;
     ResultSet rs;
     Koneksi koneksi;
+    private String username;
     
     public FormPeminjaman() {
         initComponents();
@@ -22,6 +23,12 @@ public class FormPeminjaman extends javax.swing.JInternalFrame {
         LoadData();
         LoadKodeBuku();
     }
+    
+    public void setUsername(String username) {
+        this.username = username;
+        jTextField1.setText(username); // Tampilkan username pada jTextField1
+    }
+    
     private void LoadKodeBuku() {
         String sql = "SELECT KodeBuku FROM databuku";
          
@@ -111,7 +118,6 @@ public class FormPeminjaman extends javax.swing.JInternalFrame {
     }
 
     public void Clear(){
-        jTextField1.setText("");
         jTextField2.setText("");
         jComboBox1.setSelectedIndex(0);
         jTextField3.setText("");
@@ -132,6 +138,7 @@ public class FormPeminjaman extends javax.swing.JInternalFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
+        jTextField1.setEditable(false);
         jTextField2 = new javax.swing.JTextField();
         jComboBox1 = new javax.swing.JComboBox<>();
         OK = new javax.swing.JButton();
